@@ -1,6 +1,6 @@
 
 //creates an object array of buttons assigned the .drum class
-var drumButtons = document.querySelectorAll(".drum");
+var drumButtons = $("button.drum");
 
 function makeSound(key){
     switch (key) {
@@ -41,7 +41,7 @@ function makeSound(key){
 
 //detects button clicks - uses html text as input to makeSound()
 function handleClick(){
-    var buttonChar = this.innerHTML; //this gets the letter associate with each button
+    var buttonChar = $(this).html(); //this gets the letter associate with each button
     makeSound(buttonChar);
     buttonAnimation(buttonChar);
    
@@ -55,18 +55,17 @@ function handleKeyPress(event){
 
 function buttonAnimation(currentKey){
     //gets button by unique letter class
-    var activeButton = document.querySelector("." + currentKey);
+    var activeButton = $("." + currentKey);
 
     //applies .pressed css style to indicate button has been pressed
-    activeButton.classList.add("pressed"); 
+    activeButton.addClass("pressed"); 
 
     //this removes .pressed after 1 sec. note: using anonymous function
-    setTimeout(function(){activeButton.classList.remove("pressed");}, 100);
+    setTimeout(function(){activeButton.removeClass("pressed");}, 100);
 }
 
+//calls the handleKeyPress function when the keydown event is active
+$("body").on("keydown", handleKeyPress);
 
-document.addEventListener("keydown", handleKeyPress);
-
-for (var i = 0; i < drumButtons.length; i++){
-    drumButtons[i].addEventListener("click", handleClick,);
-}
+//assigns the click event listener to all buttons and handleClick when active
+$("button").click(handleClick);
